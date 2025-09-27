@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tp1_5n6/ui/components/navbutton.dart';
+import 'package:tp1_5n6/ui/components/screen_title_text.dart';
 import 'package:tp1_5n6/utils/widget_style.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -14,14 +15,7 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "Inscription",
-                style: TextStyle(
-                  fontSize: 40,
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              const ScreenTitleText(title: "Inscription"),
               TextField(
                 decoration: InputDecoration(helperText: "Nom d'utilisateur"),
               ),

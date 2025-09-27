@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tp1_5n6/ui/components/navbutton.dart';
+import 'package:tp1_5n6/ui/components/screen_title_text.dart';
+import 'package:tp1_5n6/ui/screens/creation_screen.dart';
 import 'package:tp1_5n6/ui/screens/register_screen.dart';
 import 'package:tp1_5n6/utils/widget_style.dart';
 
@@ -15,21 +17,17 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "Se connecter",
-                style: TextStyle(
-                  fontSize: 40,
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              const ScreenTitleText(title: "Se connecter"),
               TextField(
                 decoration: InputDecoration(helperText: "Nom d'utilisateur"),
               ),
               TextField(
                 decoration: InputDecoration(helperText: "Mot de passe"),
               ).withPadding(bottom: 30),
-              NavButton(text: "Connexion", route: const Placeholder()),
+              NavButton(
+                text: "Connexion",
+                route: const CreationScreen(),
+              ).withPadding(bottom: 15),
               NavButton(text: "S'inscrire", route: const RegisterScreen()),
             ],
           ),
