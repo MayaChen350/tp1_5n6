@@ -38,7 +38,7 @@ class _CreationScreenState extends State<CreationScreen> {
                   taskName = value;
                 },
               ).withPadding(bottom: 25),
-              Datepicker(
+              DatePicker(
                 label: "Date d'échéance",
                 onDateSelected: (date) {
                   dateSelected = date;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tp1_5n6/data/task.dart';
+import 'package:tp1_5n6/ui/screens/consultation_screen.dart';
 
 class TaskWidget extends StatelessWidget {
   final Task task;
@@ -12,7 +13,14 @@ class TaskWidget extends StatelessWidget {
     return Card(
       elevation: 8.0,
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-      child: Container(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ConsultationScreen(task: task),
+            ),
+          );
+        },
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 20.0,
