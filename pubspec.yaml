@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.1.5+1
   grouped_list: ^6.0.0
   protobuf: ^4.2.0
+  dio: ^5.9.0
 
 dev_dependencies:
   flutter_test:
