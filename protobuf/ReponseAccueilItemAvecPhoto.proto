@@ -1,0 +1,13 @@
+syntax = "proto3";
+package kickmyb;
+import "google/protobuf/timestamp.proto";
+
+message ReponseAccueilItemAvecPhoto {
+ int64 id = 1;
+ string nom = 2;
+ int32 pourcentageAvancement = 3;
+ int32 pourcentageTemps = 4;
+ google.protobuf.Timestamp dateLimite = 5;
+
+ int64 idPhoto = 6;
+}

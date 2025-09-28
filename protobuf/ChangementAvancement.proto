@@ -1,0 +1,8 @@
+syntax = "proto3";
+package kickmyb;
+import "google/protobuf/timestamp.proto";
+
+message ChangementAvancement {
+  int32 valeur = 1;
+  google.protobuf.Timestamp dateLimite = 2;
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+package kickmyb;
+
+import "google/protobuf/timestamp.proto";
+import "protobuf/ChangementAvancement.proto";
+
+message ReponseDetailTache {
+ int64 id = 1;
+
+ string nom = 2;
+ google.protobuf.Timestamp dateLimite = 3;
+
+ repeated ChangementAvancement changements = 4;
+
+ int32 pourcentageAvancement = 5;
+ double pourcentageTemps = 6;
+}

@@ -1,0 +1,19 @@
+syntax = "proto3";
+package kickmyb;
+
+import "google/protobuf/timestamp.proto";
+import "protobuf/ChangementAvancement.proto";
+
+message ReponseDetailTacheAvecPhoto {
+ int64 id = 1;
+
+ string nom = 2;
+ google.protobuf.Timestamp dateLimite = 3;
+
+ repeated ChangementAvancement changements = 4;
+
+ int32 pourcentageAvancement = 5;
+ double pourcentageTemps = 6;
+
+ int64 photoId = 7;
+}

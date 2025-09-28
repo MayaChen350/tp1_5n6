@@ -1,0 +1,7 @@
+syntax = "proto3";
+package kickmyb;
+
+message RequeteConnexion {
+ string nom = 1;
+ string motDePasse = 2;
+}

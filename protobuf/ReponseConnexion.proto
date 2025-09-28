@@ -1,0 +1,6 @@
+syntax = "proto3";
+package kickmyb;
+
+message ReponseConnexion {
+ string nomUtilisateur = 1;
+}

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package kickmyb;
+
+import "google/protobuf/timestamp.proto";
+
+message ReponseAjoutTache {
+ string nom = 1;
+ google.protobuf.Timestamp dateLimite = 2;
+}
