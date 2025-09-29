@@ -8,6 +8,6 @@ class Success<T> extends Result<T> {
 }
 
 class Failure<T> extends Result<T> {
-  final String message;
+  final String? message;
   const Failure(this.message);
 }

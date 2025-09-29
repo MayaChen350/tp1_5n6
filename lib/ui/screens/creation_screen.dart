@@ -20,7 +20,7 @@ class _CreationScreenState extends State<CreationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const padding = EdgeInsets.all(90);
+    const padding = EdgeInsets.all(70);
 
     return Scaffold(
       body: Center(

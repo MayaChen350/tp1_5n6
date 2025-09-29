@@ -4,7 +4,7 @@ class ScreenTitleText extends StatelessWidget {
   final String title;
   final double titleSize;
 
-  const ScreenTitleText({super.key, required this.title, this.titleSize = 40});
+  const ScreenTitleText({super.key, required this.title, this.titleSize = 35});
 
   @override
   Widget build(BuildContext context) {
