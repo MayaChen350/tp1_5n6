@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
 import 'package:tp1_5n6/data/task.dart';
 
 // TODO: Make this better gosh this is awful
 class ConsultationScreen extends StatelessWidget {
-  final Task task;
+  final ReponseAccueilItem task;
 
   const ConsultationScreen({super.key, required this.task});
 
@@ -11,7 +12,7 @@ class ConsultationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(task.name),
+        title: Text(task.nom),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
@@ -22,7 +23,7 @@ class ConsultationScreen extends StatelessWidget {
               spacing: 5,
               children: [
                 const Text("Deadline"),
-                Text(task.deadline.toString()),
+                Text(task.dateLimite.toDateTime().toString()),
               ],
             ),
           ],

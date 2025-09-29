@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
 import 'package:tp1_5n6/data/task.dart';
 import 'package:tp1_5n6/ui/screens/consultation_screen.dart';
 
 class TaskWidget extends StatelessWidget {
-  final Task task;
+  final ReponseAccueilItem task;
 
   const TaskWidget({super.key, required this.task});
 
@@ -31,7 +32,7 @@ class TaskWidget extends StatelessWidget {
           //     'https://www.pngall.com/wp-content/uploads/2017/04/IPL-Logo-2017-PNG.png',
           //   ), // Leading icon
           // ),
-          title: Text(task.name),
+          title: Text(task.nom),
         ),
       ),
     );

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:tp1_5n6/backend/util_classes/result.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
@@ -58,6 +60,19 @@ class AppService {
   );
 
   // TASKS
+
+  /// GET ///
+  Future<Result<List<ReponseAccueilItem>>> getTasks() async {
+    final taskList = await handleRequest(() async => _dio.get("$_baseAddress/home"));
+
+    switch (taskList) {
+      case Success():
+        final List<dynamic> list = jsonDecode(taskList.value);
+        return Success(list.map((elem) => ReponseAccueilItem.fromJson(elem)).toList());
+      case Failure():
+        return Failure(taskList.message);
+    }
+  }
 
   /// POST ///
   Future<Result<ReponseAjoutTache>> addNewTask(

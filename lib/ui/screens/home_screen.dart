@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:tp1_5n6/backend/AppService.dart';
+import 'package:tp1_5n6/backend/util_classes/result.dart';
+import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
 import 'package:tp1_5n6/data/task.dart';
 import 'package:tp1_5n6/ui/components/task_widget.dart';
 import 'package:tp1_5n6/utils/month.dart';
@@ -12,32 +16,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Task> _temporaryHardcodedList = [
-    Task(name: "Teset", deadline: DateTime.now()),
-    Task(name: "Teswwt", deadline: DateTime.now()),
-    Task(name: "Teste", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Tsest", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Tesst", deadline: DateTime.now()),
-    Task(name: "Tewest", deadline: DateTime.now()),
-    Task(name: "Teswet", deadline: DateTime.now()),
-    Task(name: "Tdewest", deadline: DateTime.now()),
-    Task(name: "Teswt", deadline: DateTime.now()),
-    Task(name: "Teswrt", deadline: DateTime.now()),
-    Task(name: "Tesrwrt", deadline: DateTime.now()),
-    Task(name: "Teswrt", deadline: DateTime.now()),
-    Task(name: "Tesfdft", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test", deadline: DateTime.now()),
-    Task(name: "Test 2", deadline: DateTime(2026)),
-  ];
+  late List<ReponseAccueilItem> _taskList;
+  final _service = AppService();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTasks();
+  }
+
+  Future<void> fetchTasks() async {
+    final taskList = await _service.getTasks();
+
+    switch (taskList) {
+      case Success<List<ReponseAccueilItem>>():
+        setState(() {
+          _taskList = taskList.value!;
+        });
+      case Failure<List<ReponseAccueilItem>>():
+        if (kDebugMode) {
+          print("Failed to load tasks: ${taskList.message}");
+        }
+        setState(() {
+          _taskList = List.empty();
+        });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
-      body: GroupedListView<Task, DateTime>(
-        elements: _temporaryHardcodedList,
-        groupBy: (element) => element.deadline,
+      body: GroupedListView<ReponseAccueilItem, DateTime>(
+        elements: _taskList,
+        groupBy: (element) => element.dateLimite.toDateTime(),
         groupComparator: (value1, value2) => value1.compareTo(value2),
         itemComparator: (item1, item2) =>
-            item1.deadline.day.compareTo(item2.deadline.day),
+            item1.dateLimite.toDateTime().day.compareTo(item2.dateLimite.toDateTime().day),
         order: GroupedListOrder.ASC,
         useStickyGroupSeparators: true,
         groupSeparatorBuilder: (DateTime value) => Padding(
