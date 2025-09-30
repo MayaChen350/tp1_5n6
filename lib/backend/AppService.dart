@@ -1,4 +1,3 @@
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -95,12 +94,6 @@ class AppService {
         data: {"nom": name, "dateLimite": dateLimite},
       ),
     );
-
-    // return await _dio.postProto<ReponseAjoutTache>(
-    //   "$_baseAddress/tache/ajout",
-    //   {"nom": name, "dateLimite": dateLimite},
-    //   ReponseAjoutTache.create(),
-    // );
   }
 
   /// GET ///
@@ -111,11 +104,20 @@ class AppService {
       );
 
   /// GET ///
-  Future<Result<ReponseDetailTache>> getTaskDetails(long taskId) async =>
-      await _dio.getProto<ReponseDetailTache>(
-        "$_baseAddress/tache/detail/$taskId",
-        ReponseDetailTache.create(),
-      );
+  Future<Result<ReponseDetailTache>> getTaskDetails(long taskId) async {
+    final result = await handleRequest<dynamic>(
+      () async => await _dio.get("$_baseAddress/tache/detail/${taskId.value}"),
+    );
+
+    switch (result) {
+      case Success<dynamic>(value: final val!):
+        ReponseDetailTache tache = ReponseDetailTache.create();
+        tache.mergeFromProto3Json(val);
+        return Success(tache);
+      case Failure<dynamic>():
+        return Failure(result.message);
+    }
+  }
 
   /// Not linked to any API endpoint ///
   Future<Result<ReponseAccueilItem?>> getTaskFromName(String? name) async {
@@ -171,7 +173,7 @@ class AppService {
 
   /// POST ///
   Future<Result<String?>> tryRecordToken(String token) async => handleRequest(
-    () async => _dio.post<String>(
+    () async => await _dio.post<String>(
       "$_baseAddress/enregistrer-jeton-notification",
       data: token,
     ),

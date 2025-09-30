@@ -21,11 +21,11 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 class ChangementAvancement extends $pb.GeneratedMessage {
   factory ChangementAvancement({
     $core.int? valeur,
-    $0.Timestamp? dateLimite,
+    $0.Timestamp? dateChangement,
   }) {
     final result = create();
     if (valeur != null) result.valeur = valeur;
-    if (dateLimite != null) result.dateLimite = dateLimite;
+    if (dateChangement != null) result.dateChangement = dateChangement;
     return result;
   }
 
@@ -43,8 +43,8 @@ class ChangementAvancement extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'kickmyb'),
       createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'valeur', $pb.PbFieldType.O3)
-    ..aOM<$0.Timestamp>(2, _omitFieldNames ? '' : 'dateLimite',
-        protoName: 'dateLimite', subBuilder: $0.Timestamp.create)
+    ..aOM<$0.Timestamp>(2, _omitFieldNames ? '' : 'dateChangement',
+        protoName: 'dateChangement', subBuilder: $0.Timestamp.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -79,15 +79,15 @@ class ChangementAvancement extends $pb.GeneratedMessage {
   void clearValeur() => $_clearField(1);
 
   @$pb.TagNumber(2)
-  $0.Timestamp get dateLimite => $_getN(1);
+  $0.Timestamp get dateChangement => $_getN(1);
   @$pb.TagNumber(2)
-  set dateLimite($0.Timestamp value) => $_setField(2, value);
+  set dateChangement($0.Timestamp value) => $_setField(2, value);
   @$pb.TagNumber(2)
-  $core.bool hasDateLimite() => $_has(1);
+  $core.bool hasDateChangement() => $_has(1);
   @$pb.TagNumber(2)
-  void clearDateLimite() => $_clearField(2);
+  void clearDateChangement() => $_clearField(2);
   @$pb.TagNumber(2)
-  $0.Timestamp ensureDateLimite() => $_ensure(1);
+  $0.Timestamp ensureDateChangement() => $_ensure(1);
 }
 
 const $core.bool _omitFieldNames =
