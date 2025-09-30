@@ -21,17 +21,26 @@ class TaskWidget extends StatelessWidget {
             ),
           );
         },
-        child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20.0,
-            vertical: 10.0,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(task.nom),
+              Column(
+                children: [
+                  Text(
+                    "Pour dans ${task.dateLimite.toDateTime().difference(DateTime.now()).inDays > 0 ? "${task.dateLimite.toDateTime().difference(DateTime.now()).inDays} jours" : "${task.dateLimite.toDateTime().difference(DateTime.now()).inHours} heures"}",
+                  ),
+                  Text(
+                    style: TextStyle(fontSize: 10),
+                    "(${task.pourcentageTemps}% écoulé)",
+                  ),
+                ],
+              ),
+              Text("${task.pourcentageAvancement}%"),
+            ],
           ),
-          // leading: ImageIcon(
-          //   NetworkImage(
-          //     'https://www.pngall.com/wp-content/uploads/2017/04/IPL-Logo-2017-PNG.png',
-          //   ), // Leading icon
-          // ),
-          title: Text(task.nom),
         ),
       ),
     );

@@ -45,7 +45,7 @@ class _DatePickerState extends State<DatePicker> {
         child: Text(
           selectedDate != null
               ? '${selectedDate!.toLocal()}'.split(' ')[0]
-              : 'Select a date',
+              : 'Choisir une date',
         ),
       ),
     );
