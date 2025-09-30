@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 callback: () => connectionScreenHelper.connexionButtonCallback(
                   () async => await connectionScreenHelper.service
                       .tryConnecting(_request),
-                  () => mounted,
+                  () => context.mounted,
                 ),
               ),
               NavButton(text: "S'inscrire", route: const RegisterScreen()),

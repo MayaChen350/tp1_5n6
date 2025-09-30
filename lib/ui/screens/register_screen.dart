@@ -67,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 callback: () => connectionScreenHelper.connexionButtonCallback(
                   () async => await connectionScreenHelper.service
                       .tryRegistering(_request),
-                  () => mounted,
+                  () => context.mounted,
                 ),
               ),
               if (connectionScreenHelper.errorMessage != null)

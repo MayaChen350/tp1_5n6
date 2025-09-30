@@ -1,9 +1,10 @@
-import 'dart:convert';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tp1_5n6/backend/util_classes/result.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
-import 'package:tp1_5n6/data/generated/protobuf/ReponseAjoutTache.pb.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseConnexion.pb.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseDetailTache.pb.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseDetailTacheAvecPhoto.pb.dart';
@@ -14,8 +15,11 @@ import 'package:tp1_5n6/utils/dio_proto.dart';
 import 'package:tp1_5n6/utils/error_message.dart';
 
 class AppService {
-  // Singleton boilerplate
-  AppService._internal();
+  AppService._internal() {
+    _dio = Dio();
+
+    _dio.interceptors.add(CookieManager(CookieJar()));
+  }
 
   static AppService? _instance;
 
@@ -25,11 +29,11 @@ class AppService {
   }
 
   // DIO (Request library)
-  final Dio _dio = Dio();
+  late final Dio _dio;
 
   // Service logic
 
-  static const String _baseAddress = "http://10.0.0.84:8080";
+  static const String _baseAddress = "https://kmbserver-backend.onrender.com";
 
   static Future<Result<T>> handleRequest<T>(
     Future<Response<T>> Function() request,
@@ -63,30 +67,40 @@ class AppService {
 
   /// GET ///
   Future<Result<List<ReponseAccueilItem>>> getTasks() async {
-    final taskList = await handleRequest(() async => _dio.get("$_baseAddress/home"));
+    final taskList = await handleRequest(
+      () async => _dio.get("$_baseAddress/tache/accueil"),
+    );
 
     switch (taskList) {
       case Success():
-        final List<dynamic> list = jsonDecode(taskList.value);
-        return Success(list.map((elem) => ReponseAccueilItem.fromJson(elem)).toList());
+        final List<dynamic> list = taskList.value;
+        return Success(
+          list.map((elem) {
+            final reponse = ReponseAccueilItem.create();
+            return reponse..mergeFromProto3Json(elem);
+          }).toList(),
+        );
       case Failure():
         return Failure(taskList.message);
     }
   }
 
   /// POST ///
-  Future<Result<ReponseAjoutTache>> addNewTask(
-    String name,
-    DateTime deadline,
-  ) async {
+  Future<Result<String?>> addNewTask(String name, DateTime deadline) async {
     final dateLimite = deadline.toUtc().toIso8601String();
-    // "${deadline.year}-${deadline.month}-${deadline.day}T${deadline.hour}:${deadline.minute}:${deadline.second}.${deadline.millisecond}Z";
 
-    return await _dio.postProto<ReponseAjoutTache>(
-      "$_baseAddress/tache/ajout",
-      {"nom": name, "dateLimite": dateLimite},
-      ReponseAjoutTache.create(),
+    return handleRequest(
+      () async => _dio.post<String>(
+        "$_baseAddress/tache/ajout",
+        data: {"nom": name, "dateLimite": dateLimite},
+      ),
     );
+
+    // return await _dio.postProto<ReponseAjoutTache>(
+    //   "$_baseAddress/tache/ajout",
+    //   {"nom": name, "dateLimite": dateLimite},
+    //   ReponseAjoutTache.create(),
+    // );
   }
 
   /// GET ///
@@ -103,12 +117,33 @@ class AppService {
         ReponseDetailTache.create(),
       );
 
-  /// GET ///
-  Future<Result<ReponseAccueilItem>> getTaskList() async =>
-      await _dio.getProto<ReponseAccueilItem>(
-        "$_baseAddress/tache/accueil",
-        ReponseAccueilItem.create(),
-      );
+  /// Not linked to any API endpoint ///
+  Future<Result<ReponseAccueilItem?>> getTaskFromName(String? name) async {
+    if (name == null) return Success(name as Null);
+
+    final listTasks = await getTasks();
+
+    ReponseAccueilItem? findTask(String name) {
+      final result = (listTasks as Success<List<ReponseAccueilItem>>).value!
+          .firstWhere(
+            (item) => item.nom == name,
+            orElse: () => ReponseAccueilItem(id: null),
+          );
+
+      if (!result.hasId()) {
+        return null;
+      } else {
+        return result;
+      }
+    }
+
+    switch (listTasks) {
+      case Success<List<ReponseAccueilItem>>():
+        return Success(await compute(findTask, name));
+      case Failure<List<ReponseAccueilItem>>():
+        return Failure(listTasks.message);
+    }
+  }
 
   // USERS
 

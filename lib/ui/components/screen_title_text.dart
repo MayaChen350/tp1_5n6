@@ -10,6 +10,7 @@ class ScreenTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
+      textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: titleSize,
         color: Theme.of(context).colorScheme.primary,

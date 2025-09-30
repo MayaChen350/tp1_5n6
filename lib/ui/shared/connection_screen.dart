@@ -35,7 +35,7 @@ class ConnectionScreenStateHelper {
 
       switch (result) {
         case Success<T>(value: final response):
-          if (!isMounted()) return;
+          if (!context.mounted) return;
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const HomeScreen()),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
-import 'package:tp1_5n6/data/task.dart';
 
 // TODO: Make this better gosh this is awful
 class ConsultationScreen extends StatelessWidget {
