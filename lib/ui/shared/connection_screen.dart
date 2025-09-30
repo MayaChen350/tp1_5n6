@@ -14,7 +14,6 @@ class ConnectionScreenStateHelper {
   ConnectionScreenStateHelper(this.setStateCall, this.context);
 
   void sendErrorMessage(String? message) {
-    // TODO
     message ??= "Unknown error";
     setStateCall(() {
       errorMessage = message;
@@ -24,6 +23,7 @@ class ConnectionScreenStateHelper {
   void connexionButtonCallback<T>(
     Future<Result<T>> Function() effect,
     bool Function() isMounted,
+    final String username,
   ) async {
     if (!loading) {
       setStateCall(() {
@@ -38,7 +38,7 @@ class ConnectionScreenStateHelper {
           if (!context.mounted) return;
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const HomeScreen()),
+            MaterialPageRoute(builder: (_) => HomeScreen(username: username)),
           );
         case Failure<T>(message: final message):
           sendErrorMessage(message);

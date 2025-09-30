@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tp1_5n6/backend/AppService.dart';
-import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseDetailTache.pb.dart';
+import 'package:tp1_5n6/ui/components/nav_drawer.dart';
 import 'package:tp1_5n6/utils/month.dart';
 import 'package:tp1_5n6/utils/widget_style.dart';
 
@@ -39,6 +39,7 @@ class _ConsultationScreenState extends State<ConsultationScreen> {
         }
       },
       child: Scaffold(
+        drawer: NavDrawer(),
         appBar: AppBar(
           title: Text(widget.task.nom),
           backgroundColor: Theme.of(context).colorScheme.primary,

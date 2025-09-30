@@ -4,6 +4,7 @@ import 'package:tp1_5n6/backend/util_classes/result.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
 import 'package:tp1_5n6/ui/components/app_button.dart';
 import 'package:tp1_5n6/ui/components/datepicker.dart';
+import 'package:tp1_5n6/ui/components/nav_drawer.dart';
 import 'package:tp1_5n6/utils/widget_style.dart';
 
 import '../components/input_field.dart';
@@ -28,6 +29,8 @@ class _CreationScreenState extends State<CreationScreen> {
     const padding = EdgeInsets.all(70);
 
     return Scaffold(
+      drawer: NavDrawer(),
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: padding,

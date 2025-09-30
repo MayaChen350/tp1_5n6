@@ -4,12 +4,16 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:tp1_5n6/backend/AppService.dart';
 import 'package:tp1_5n6/backend/util_classes/result.dart';
 import 'package:tp1_5n6/data/generated/protobuf/ReponseAccueilItem.pb.dart';
+import 'package:tp1_5n6/shared.dart';
+import 'package:tp1_5n6/ui/components/nav_drawer.dart';
 import 'package:tp1_5n6/ui/components/task_widget.dart';
 import 'package:tp1_5n6/ui/screens/creation_screen.dart';
 import 'package:tp1_5n6/utils/month.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String username;
+
+  const HomeScreen({super.key, required this.username});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    Shared.username = widget.username;
+
     super.initState();
     fetchTasks();
   }
@@ -43,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
         title: const Text('Accueil'),
         backgroundColor: Theme.of(context).colorScheme.primary,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// TODO: Beautifulize this
 class InputField extends StatefulWidget {
   final String title;
   final double size;
@@ -31,12 +30,5 @@ class _InputFieldState extends State<InputField> {
         },
       ),
     );
-
-    // return Column(
-    //   children: [
-    //     Text(title, style: TextStyle(fontSize: size)),
-    //     TextField()
-    //   ],
-    // );
   }
 }

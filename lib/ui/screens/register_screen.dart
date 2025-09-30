@@ -68,6 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   () async => await connectionScreenHelper.service
                       .tryRegistering(_request),
                   () => context.mounted,
+                  _request.nom
                 ),
               ),
               if (connectionScreenHelper.errorMessage != null)
